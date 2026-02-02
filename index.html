@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DeepSuite - An AI-native connected commerce platform currently in private prototyping.">
+    <title>DeepSuite — Coming Soon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #111827;
+            --text-primary: #f9fafb;
+            --text-secondary: #d1d5db;
+            --text-muted: #9ca3af;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Animated background gradient */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: linear-gradient(135deg, #0a0e1a 0%, #1a1f35 50%, #0f172a 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Subtle grid pattern overlay */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        /* Floating dots animation */
+        .floating-dots {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .dot {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(59, 130, 246, 0.3);
+            border-radius: 50%;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .dot:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .dot:nth-child(2) { left: 30%; animation-delay: 2s; }
+        .dot:nth-child(3) { left: 50%; animation-delay: 4s; }
+        .dot:nth-child(4) { left: 70%; animation-delay: 6s; }
+        .dot:nth-child(5) { left: 90%; animation-delay: 8s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            50% { transform: translateY(-100vh) scale(1); opacity: 0.5; }
+        }
+
+        /* Main container */
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header */
+        header {
+            padding: 2rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.375rem 0.75rem;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--accent);
+            letter-spacing: 0.02em;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 8rem 0 6rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 600;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--text-secondary);
+            line-height: 1.7;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+
+        /* Pillars Section */
+        .pillars {
+            padding: 4rem 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .pillar {
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .pillar:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(59, 130, 246, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .pillar-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .pillar-description {
+            font-size: 0.9375rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Status Section */
+        .status {
+            padding: 4rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .status-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        .timeline {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+            animation: pulse 2s infinite;
+        }
+
+        .timeline-dot.inactive {
+            background: var(--text-muted);
+            box-shadow: none;
+            animation: none;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+
+        .timeline-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        .timeline-label.active {
+            color: var(--accent);
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 0 3rem;
+            text-align: center;
+        }
+
+        .footer-message {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .footer-contact {
+            margin-bottom: 2rem;
+        }
+
+        .footer-contact a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            transition: color 0.2s ease;
+        }
+
+        .footer-contact a:hover {
+            color: var(--accent-hover);
+        }
+
+        .footer-copyright {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .hero {
+                padding: 4rem 0 3rem;
+            }
+
+            .pillars {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .timeline {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .timeline-item {
+                flex-direction: row;
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .timeline-dot {
+                margin-right: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .pillar {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-gradient"></div>
+    <div class="grid-overlay"></div>
+    <div class="floating-dots">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <a href="#" class="logo">DeepSuite</a>
+            <span class="badge">Private Build</span>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>We're Building Something Carefully.</h1>
+            <p>
+                DeepSuite is an AI-native connected commerce platform currently in private prototyping. 
+                We're taking a security-first, stability-focused approach to ensure we build something 
+                that stands the test of time.
+            </p>
+        </section>
+
+        <!-- Pillars Section -->
+        <section class="pillars">
+            <div class="pillar">
+                <div class="pillar-title">Scalability</div>
+                <div class="pillar-description">
+                    Architecting systems designed to grow seamlessly with enterprise demands.
+                </div>
+            </div>
+            <div class="pillar">
+                <div class="pillar-title">Security-First Architecture</div>
+                <div class="pillar-description">
+                    Building with security as a foundational principle, not an afterthought.
+                </div>
+            </div>
+            <div class="pillar">
+                <div class="pillar-title">Thoughtful System Design</div>
+                <div class="pillar-description">
+                    Every component carefully considered for long-term maintainability and clarity.
+                </div>
+            </div>
+            <div class="pillar">
+                <div class="pillar-title">AI-Native Foundations</div>
+                <div class="pillar-description">
+                    Embedding intelligence at the core, enabling capabilities that evolve naturally.
+                </div>
+            </div>
+        </section>
+
+        <!-- Status Section -->
+        <section class="status">
+            <h2 class="status-title">Current Status</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-label active">Private Prototype — Ongoing</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot inactive"></div>
+                    <div class="timeline-label">Pilot Phase — Planned</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot inactive"></div>
+                    <div class="timeline-label">Soft Launch — Upcoming</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p class="footer-message">We're taking the time to build this right.</p>
+            <div class="footer-contact">
+                <a href="mailto:partnerships@deepsuite.io">hello@deepsuite.app</a>
+            </div>
+            <div class="footer-copyright">
+                © 2025 DeepSuite. All rights reserved.
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
